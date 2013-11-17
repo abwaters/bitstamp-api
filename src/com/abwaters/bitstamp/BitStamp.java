@@ -101,6 +101,91 @@ public class Bitstamp {
 		return authrequest("balance",null) ;
 	}
 	
+	public String getUserTransactions(int offset,int limit,boolean sort_asc) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("offset",Integer.toString(offset)) ;
+		args.put("limit",Integer.toString(limit)) ;
+		args.put("sort",sort_asc?"asc":"desc") ;
+		return authrequest("user_transctions",null) ;
+	}
+	
+	public String getOpenOrders() throws BitstampException {
+		return authrequest("open_orders",null) ;
+	}
+	
+	public String cancelOrder(int orderid) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("id",Integer.toString(orderid)) ;
+		return authrequest("cancel_order",args) ;
+	}
+	
+	public String buyLimitOrder(double amount,double price) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("amount",Double.toString(amount)) ;
+		args.put("price",Double.toString(price)) ;
+		return authrequest("buy",args) ;
+	}
+	
+	public String sellLimitOrder(double amount,double price) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("amount",Double.toString(amount)) ;
+		args.put("price",Double.toString(price)) ;
+		return authrequest("sell",args) ;
+	}
+	
+	public String checkCode(String code) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("code",code) ;
+		return authrequest("check_code",args) ;
+	}
+	
+	public String redeemCode(String code) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("code",code) ;
+		return authrequest("redeem_code",args) ;
+	}
+	
+	public String getWithdrawalRequests() throws BitstampException {
+		return authrequest("withdrawal_requests",null) ;
+	}
+	
+	public String withdrawBitcoin(double amount,String address) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("amount",Double.toString(amount)) ;
+		args.put("address",address) ;
+		return authrequest("bitcoin_withdrawal",args) ;
+	}
+	
+	public String getBitcoinDeposits() throws BitstampException {
+		return authrequest("unconfirmed_btc",null) ;
+	}
+	
+	public String withdrawRipple(double amount,String address,String currency) throws BitstampException {
+		Map<String,String> args = new HashMap<String,String>() ;
+		args.put("amount",Double.toString(amount)) ;
+		args.put("address",address) ;
+		args.put("currency",currency) ;
+		return authrequest("ripple_withdrawal",args) ;
+	}
+	
+	public String getRippleDepositAddress() throws BitstampException {
+		return authrequest("ripple_address",null) ;
+	}
+	
+	/*
+	public String getOpenOrders() throws BitstampException {
+		return authrequest("open_orders",null) ;
+	}
+	
+	public String getOpenOrders() throws BitstampException {
+		return authrequest("open_orders",null) ;
+	}
+	
+	public String getOpenOrders() throws BitstampException {
+		return authrequest("open_orders",null) ;
+	}
+	*/
+	
 	/**
 	 * Limits how frequently calls to the open API for trade history and tickers can be made.  
 	 * If calls are attempted more frequently, the thread making the call is put to sleep for 
