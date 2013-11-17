@@ -168,24 +168,40 @@ public class Bitstamp {
 		return authrequest("ripple_withdrawal",args) ;
 	}
 	
-	public String getRippleDepositAddress() throws BitstampException {
-		return authrequest("ripple_address",null) ;
+	public RippleDepositAddress getRippleDepositAddress() throws BitstampException {
+		String result = authrequest("ripple_address",null) ;
+		return gson.fromJson(result,RippleDepositAddress.class) ;
 	}
 	
-	/*
-	public String getOpenOrders() throws BitstampException {
-		return authrequest("open_orders",null) ;
+	public static class RippleDepositAddress extends Results {
+		public String address ;
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "[error=" + error + " ,address="+address+"]";
+		}
 	}
 	
-	public String getOpenOrders() throws BitstampException {
-		return authrequest("open_orders",null) ;
+	public static class Results {
+		/**
+		 * if success is 0 then this will contain the details of the error.
+		 */
+		public String error = "" ;
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "[error=" + error + "]";
+		}
 	}
-	
-	public String getOpenOrders() throws BitstampException {
-		return authrequest("open_orders",null) ;
-	}
-	*/
-	
+
 	/**
 	 * Limits how frequently calls to the open API for trade history and tickers can be made.  
 	 * If calls are attempted more frequently, the thread making the call is put to sleep for 
