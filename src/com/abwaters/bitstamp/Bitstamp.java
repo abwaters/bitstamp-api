@@ -97,8 +97,31 @@ public class Bitstamp {
 	 * Gets the balances for your account.
 	 * 
 	 */
-	public String getBalance() throws BitstampException {
-		return authrequest("balance",null) ;
+	public Balances getBalance() throws BitstampException {
+		String result = authrequest("balance",null) ;
+		return gson.fromJson(result,Balances.class) ;
+	}
+	
+	/*
+	 * 
+	 */
+	public static class Balances extends Results {
+		public double btc_reserved ;
+		public double fee ;
+		public double btc_available ;
+		public double usd_reserved ;
+		public double btc_balance ;
+		public double usd_balance ;
+		public double usd_available ;
+		
+		@Override
+		public String toString() {
+			return "Balances [error="+error+" ,btc_reserved=" + btc_reserved + ", fee=" + fee
+					+ ", btc_available=" + btc_available + ", usd_reserved="
+					+ usd_reserved + ", btc_balance=" + btc_balance
+					+ ", usd_balance=" + usd_balance + ", usd_available="
+					+ usd_available + "]";
+		}
 	}
 	
 	public String getUserTransactions(int offset,int limit,boolean sort_asc) throws BitstampException {
